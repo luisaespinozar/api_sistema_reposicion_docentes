@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
 import { Docente } from './entities/docentes.entity';
+import { Reposiciones } from './entities/reposiciones.entity';
 
 @Injectable()
 export class ReposicionService {
@@ -10,7 +12,7 @@ export class ReposicionService {
     @InjectRepository(Clase)
     private claseRepository: Repository<Clase>,
     @InjectRepository(Docente)
-    private docenteRepository: Repository<Docente>,
+    private repoRepository: Repository<Reposiciones>,
   ) {}
 
   // async findAllDocentes(): Promise<Clase[]> {
@@ -35,5 +37,38 @@ export class ReposicionService {
         cuentaCatedratico,
       })
       .getRawMany();
+  }
+
+  async insertReposicionDB(
+    idDocente: number,
+    idClase: number,
+    tipoTramite: string,
+    conGoseSueldo: number,
+    linkAulaVirtual: string,
+    motivo: string,
+    breveExplicacion: string,
+    fechaReposicion: Date,
+    horaInicio: string,
+    horaFin: string,
+  ): Promise<any> {
+    return this.repoRepository
+      .createQueryBuilder('repo')
+      .insert()
+      .into(Reposiciones)
+      .values([
+        {
+          id_docente: idDocente,
+          id_clase: idClase,
+          tipo_tramite: tipoTramite,
+          con_gose_sueldo: conGoseSueldo,
+          link_aula_virtual: linkAulaVirtual,
+          motivo: motivo,
+          breve_explicacion: breveExplicacion,
+          fecha_reposicion: fechaReposicion,
+          hora_inicio: horaInicio,
+          hora_fin: horaFin,
+        } as unknown as Partial<Reposiciones>,
+      ])
+      .execute();
   }
 }

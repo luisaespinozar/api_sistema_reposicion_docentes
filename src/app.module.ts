@@ -9,6 +9,7 @@ import { Seccion } from './reposicion/entities/secciones.entity';
 import { Asignatura } from './reposicion/entities/asignaturas.entity';
 import { ReposicionController } from './reposicion/reposicion.controller';
 import { ReposicionService } from './reposicion/reposicion.service';
+import { Reposiciones } from './reposicion/entities/reposiciones.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { ReposicionService } from './reposicion/reposicion.service';
       username: 'root',
       password: 'hDPR8aTinNfdLWM5gYr7',
       database: 'usap_sistema',
-      entities: [Clase, Docente, Seccion, Asignatura],
+      entities: [Clase, Docente, Seccion, Asignatura, Reposiciones],
       synchronize: true,
     }),
     ReposicionModule,
