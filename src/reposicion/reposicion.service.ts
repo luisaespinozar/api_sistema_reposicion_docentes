@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Asignatura } from './entities/asignaturas.entity';
 import { Clase } from './entities/clase.entity';
 import { Docente } from './entities/docentes.entity';
-import { Seccion } from './entities/secciones.entity';
 
 @Injectable()
 export class ReposicionService {
