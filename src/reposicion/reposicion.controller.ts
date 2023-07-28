@@ -16,24 +16,22 @@ export class ReposicionController {
 
   @Post('/registrarReposicion')
   async postReposicion(@Body() reposicionData: any) {
-    const fechaReposicionParts =
-      reposicionData.reposicionData.fechaReposicion.split('/');
+    const fechaReposicionParts = reposicionData.fechaReposicion.split('/');
     const fechaReposicionFormatted = `${fechaReposicionParts[2]}-${fechaReposicionParts[1]}-${fechaReposicionParts[0]}`;
     const nuevaFecha = new Date(fechaReposicionFormatted);
-    console.log('AQUI 1: ');
 
     // Aquí, se espera que reposicionData contenga todos los datos necesarios para insertar una reposición
     const reposicion = await this.reposicionService.insertReposicionDB(
-      reposicionData.reposicionData.idDocente,
-      reposicionData.reposicionData.idClase,
-      reposicionData.reposicionData.tipoTramite,
-      reposicionData.reposicionData.conGoseSueldo,
-      reposicionData.reposicionData.linkAulaVirtual,
-      reposicionData.reposicionData.motivo,
-      reposicionData.reposicionData.breveExplicacion,
+      reposicionData.idDocente,
+      reposicionData.idClase,
+      reposicionData.tipoTramite,
+      reposicionData.conGoseSueldo,
+      reposicionData.linkAulaVirtual,
+      reposicionData.motivo,
+      reposicionData.breveExplicacion,
       nuevaFecha,
-      reposicionData.reposicionData.horaInicio,
-      reposicionData.reposicionData.horaFin,
+      reposicionData.horaInicio,
+      reposicionData.horaFin,
     );
 
     return reposicion.raw.insertId;
