@@ -12,8 +12,10 @@ export class ReposicionService {
   constructor(
     @InjectRepository(Clase)
     private claseRepository: Repository<Clase>,
-    @InjectRepository(Docente)
+    @InjectRepository(Reposiciones)
     private repoRepository: Repository<Reposiciones>,
+    @InjectRepository(Docente)
+    private docenteRepository: Repository<Docente>,
     private enviadorCorreoService: EnvioCorreoService,
   ) {}
 
@@ -81,5 +83,18 @@ export class ReposicionService {
         } as unknown as Partial<Reposiciones>,
       ])
       .execute();
+  }
+
+  async getInfoDocente(cuentaCatedratico: string): Promise<any[]> {
+    return this.docenteRepository
+      .createQueryBuilder('doce')
+      .select([
+        'CONCAT(doce.nombres, " ", doce.apellidos) AS nombre_completo',
+        'doce.*',
+      ])
+      .where('doce.cuentaCatedratico = :cuentaCatedratico', {
+        cuentaCatedratico,
+      })
+      .getRawMany();
   }
 }

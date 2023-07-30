@@ -14,6 +14,15 @@ export class ReposicionController {
     return clasesInfo;
   }
 
+  @Get('/info-docente')
+  async getInfoDocente(@Query('cuentaCatedratico') cuentaCatedratico: string) {
+    const clasesInfo = await this.reposicionService.getInfoDocente(
+      cuentaCatedratico,
+    );
+
+    return clasesInfo;
+  }
+
   @Post('/registrarReposicion')
   async postReposicion(@Body() reposicionData: any) {
     const fechaReposicionParts = reposicionData.fechaReposicion.split('/');
