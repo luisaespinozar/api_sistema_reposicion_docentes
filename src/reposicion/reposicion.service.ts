@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
 import { Docente } from './entities/docentes.entity';
 import { Reposiciones } from './entities/reposiciones.entity';
+import { EnvioCorreoService } from 'src/envio-correo/envio-correo.service';
 
 @Injectable()
 export class ReposicionService {
@@ -13,6 +14,7 @@ export class ReposicionService {
     private claseRepository: Repository<Clase>,
     @InjectRepository(Docente)
     private repoRepository: Repository<Reposiciones>,
+    private enviadorCorreoService: EnvioCorreoService,
   ) {}
 
   // async findAllDocentes(): Promise<Clase[]> {
@@ -51,6 +53,15 @@ export class ReposicionService {
     horaInicio: string,
     horaFin: string,
   ): Promise<any> {
+    const destinatarios = [
+      'daniel.mejia@usap.edu',
+      'df.quintanillah@gmail.com',
+    ];
+    this.enviadorCorreoService.enviarEMail(
+      destinatarios,
+      'REPOSICION CLASE',
+      'PRUEBA DE SISTEMAS DE CORREO',
+    );
     return this.repoRepository
       .createQueryBuilder('repo')
       .insert()

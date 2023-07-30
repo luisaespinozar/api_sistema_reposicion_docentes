@@ -10,6 +10,8 @@ import { Asignatura } from './reposicion/entities/asignaturas.entity';
 import { ReposicionController } from './reposicion/reposicion.controller';
 import { ReposicionService } from './reposicion/reposicion.service';
 import { Reposiciones } from './reposicion/entities/reposiciones.entity';
+import { EnvioCorreoModule } from './envio-correo/envio-correo.module';
+import { EnvioCorreoService } from './envio-correo/envio-correo.service';
 
 @Module({
   imports: [
@@ -24,8 +26,9 @@ import { Reposiciones } from './reposicion/entities/reposiciones.entity';
       synchronize: true,
     }),
     ReposicionModule,
+    EnvioCorreoModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EnvioCorreoService],
 })
 export class AppModule {}
